@@ -20,7 +20,7 @@ A **period** or **period basis** shall be a foundational organizational principl
 
 #### Project-Period
 
-A **project** is a period/period basis specially defined by the user to last a specific amount of time (e.g., 18 days). 
+A **project-period** is a period/period basis specially defined by the user to last a specific amount of time (e.g., 18 days). 
 
 ## Design Elements
 
