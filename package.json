@@ -1,0 +1,47 @@
+{
+  "name": "ef-status-monitor",
+  "version": "1.0.0",
+  "description": "executive function status monitor, habit tracker, time management tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaolbreaker/ef-status-monitor.git"
+  },
+  "keywords": [
+    "executive",
+    "function",
+    "time",
+    "management",
+    "adhd"
+  ],
+  "author": "Elbert Chan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaolbreaker/ef-status-monitor/issues"
+  },
+  "homepage": "https://github.com/gaolbreaker/ef-status-monitor#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "moment": "^2.29.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.5",
+    "eslint": "^8.14.0",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.16",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
