@@ -1,0 +1,16 @@
+body {
+  background: url("./../components/graybg.jpg");
+  font-family: 'Space Mono';
+}
+
+.first-section {
+  margin-top: 20px;
+}
+
+hr {
+  margin: 10px 10px;
+}
+
+ul {
+  list-style-type: none;
+}

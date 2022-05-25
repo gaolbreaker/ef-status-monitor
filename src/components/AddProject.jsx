@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
 
 function AddProject({addProjectIsVisible, setAddProjectIsVisible, projects, setProjects}) {
   const [projectName, setProjectName] = useState('');
@@ -10,7 +11,7 @@ function AddProject({addProjectIsVisible, setAddProjectIsVisible, projects, setP
   // }, [projects]);
 
   return (
-    <div style={{ display: addProjectIsVisible ? "block" : "none" }}>
+    <div style={{ marginTop: '25px', display: addProjectIsVisible ? "block" : "none" }}>
       <h4>Add a New Project</h4>
       <label>Name: </label>
       <input
@@ -25,13 +26,16 @@ function AddProject({addProjectIsVisible, setAddProjectIsVisible, projects, setP
         onChange={(e) => setProjectDeadline(e.target.value)}
       />
       <br />
-      <input
-        type="submit"
+      <Button
+        variant="contained"
+        style={{ backgroundColor: 'green' }}
         onClick={() => {
-          setProjects([...projects, { projectName, projectDeadline }]);
+          setProjects([...projects, { projectName, projectDeadline, projectPeriod: (new Date(projectDeadline).getTime()) - (new Date().getTime()) }]);
           setAddProjectIsVisible(false);
+          setProjectName('');
+          setProjectDeadline('');
         }}
-      />
+      >Submit</Button>
       <hr />
     </div>
   );

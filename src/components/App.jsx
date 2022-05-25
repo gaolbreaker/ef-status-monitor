@@ -1,31 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/Card';
 
 // Components
 import Countable from './Countable';
 import Project from './Project';
 import AddProject from './AddProject';
+import StyledAddCountable from './AddCountable';
 import Countdown from './Countdown';
 
 const Progress = styled.progress`
-  width: 300px;
+  width: 249px;
   height: 20px;
 `;
 
 const Status = styled.div`
   display: block;
+  background: rgba(192, 192, 192, 0.7);
   border: 2px;
-  margin: 0 auto;
-  width: 500px;
+  margin: 10px auto;
+  width: 768px;
   text-align: center;
   padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
 `;
 
 const Main = styled.div`
   border: 2px;
+  background: rgba(192, 192, 192, 0.8);
+  padding: 15px 10px;
   margin: 0 auto;
-  width: 500px;
+  width: 768px;
   text-align: center;
+  border-radius: 5px;
+
+  & Button {
+    margin-right: 10px;
+  }
 `;
 
 function App() {
@@ -43,7 +56,9 @@ function App() {
   const [count, setCount] = useState(0);
   const [max, setMax] = useState(7);
   const [addProjectIsVisible, setAddProjectIsVisible] = useState(false);
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState(localStorage.getItem('projects') !== null ? JSON.parse(localStorage.getItem('projects')) : []);
+  const [addCountableIsVisible, setAddCountableIsVisible] = useState(false);
+  const [countables, setCountables] = useState(localStorage.getItem('countables') !== null ? JSON.parse(localStorage.getItem('countables')) : []);
 
   function countDown(target, stringStateSetter, progStateSetter, updateFrequency = 42) {
     let countDownDate = new Date(target).getTime();
@@ -62,7 +77,7 @@ function App() {
         stringStateSetter(string);
         progStateSetter(1 - ((distance) / (countDownDate - initialTime)));
       } else if (distance > 0) {
-        console.log(string);
+        //console.log(string);
       }
       if (distance <= 0) {
         // clearInterval(x);
@@ -81,9 +96,9 @@ function App() {
 
     function calc() {
       const now = new Date().getTime() - 7 * (1000 * 60 * 60);
-      const seconds = Math.floor((now % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      stringStateSetter(`${seconds} h`);
-      progStateSetter(seconds / 24);
+      const hours = ((now % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      stringStateSetter(`${Math.floor(hours)} h`);
+      progStateSetter(hours / 24);
     }
 
     x = setInterval(calc, updateFrequency);
@@ -94,9 +109,9 @@ function App() {
 
     function calc() {
       const now = new Date().getTime();
-      const seconds = Math.floor((now % (1000 * 60 * 60)) / (1000 * 60));
-      stringStateSetter(`${seconds} m`);
-      progStateSetter(seconds / 60);
+      const minutes = ((now % (1000 * 60 * 60)) / (1000 * 60));
+      stringStateSetter(`${Math.floor(minutes)} m`);
+      progStateSetter(minutes / 60);
     }
 
     x = setInterval(calc, updateFrequency);
@@ -107,8 +122,8 @@ function App() {
 
     function calc() {
       const now = new Date().getTime();
-      const seconds = Math.floor((now % (1000 * 60)) / 1000);
-      stringStateSetter(`${seconds} s`);
+      const seconds = ((now % (1000 * 60)) / 1000);
+      stringStateSetter(`${Math.floor(seconds)} s`);
       progStateSetter(seconds / 60);
     }
 
@@ -120,11 +135,20 @@ function App() {
     createMinuteBar(setStatusMinute, setStatProgMin);
     createHourBar(setStatusHour, setStatProgHr);
     createDayBar(setStatusDay, setStatProgDay);
+    // if (localStorage.getItem('projects') !== null) {
+    //   setProjects(JSON.parse(localStorage.getItem('projects')));
+    // } else if (localStorage.getItem('countables') !== null) {
+    //   setCountables(JSON.parse(localStorage.getItem('countables')));
+    // }
   }, []);
 
   useEffect(() => {
-    console.log(projects);
+    localStorage.setItem('projects', JSON.stringify(projects));
   }, [projects]);
+
+  useEffect(() => {
+    localStorage.setItem('countables', JSON.stringify(countables));
+  }, [countables]);
 
   return (
     <>
@@ -135,13 +159,15 @@ function App() {
         {`${xp} `}
         Experience Points
         <br />
-        5,405 Experience Points until next level up
-        <Progress id="xp" value="70" max="365" />
+        {10000 - xp} xp until next level up
+        <br />
+        <Progress id="xp" value={xp} max="10000" />
         {/* <Progress id="test" value={statProg} />
         {'  '}
         {status} */}
         <hr />
-        {new Date().toString()}
+        {new Date().toString().slice(0, 24)}
+        <br />
         <Progress id="day" value={statProgDay} />
         {statusDay}
         <Progress id="hour" value={statProgHr} />
@@ -150,20 +176,35 @@ function App() {
         {statusMinute}
       </Status>
       <div id="temporary-separator">
-        <hr />
       </div>
       <Main id="main">
-        <button>Add countable task</button>
-        <button onClick={() => setAddProjectIsVisible(!addProjectIsVisible)}>Add project</button>
+        <Button
+          variant="contained"
+          onClick={() => setAddCountableIsVisible(!addCountableIsVisible)}
+        >
+          Add countable task
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => setAddProjectIsVisible(!addProjectIsVisible)}
+        >
+          Add project
+        </Button>
+        <StyledAddCountable
+          addCountableIsVisible={addCountableIsVisible}
+          setAddCountableIsVisible={setAddCountableIsVisible}
+          countables={countables}
+          setCountables={setCountables}
+        />
         <AddProject
           addProjectIsVisible={addProjectIsVisible}
           setAddProjectIsVisible={setAddProjectIsVisible}
           projects={projects}
           setProjects={setProjects}
         />
-        <h3>One-off</h3>
+        <h3 className="first-section">One-off</h3>
         <ul>
-          <Countable
+          {/* <Countable
             name="Do push-ups"
             goal={5}
             xp={xp}
@@ -176,11 +217,32 @@ function App() {
             xp={xp}
             xpValue={1000}
             setXp={setXp}
-          />
+          /> */}
+          {countables.map((e, i) => (
+            <>
+              <Countable
+                name={e.countableName}
+                goal={Number(e.countableGoal)}
+                xp={xp}
+                xpValue={1000}
+                setXp={setXp}
+              />
+              <Button
+                variant="text"
+                onClick={() => {
+                  const arrayCopy = [...countables];
+                  arrayCopy.splice(i, 1);
+                  setCountables(arrayCopy);
+                }}
+              >
+                ^ Delete this Task
+              </Button>
+            </>
+          ))}
         </ul>
         <h3>Project</h3>
         <ul>
-          <Project
+          {/* <Project
             name="Kiss the Stars of Babylon"
             Progress={Progress}
             projectPeriod={1000000}
@@ -188,8 +250,30 @@ function App() {
             xpValue={10000}
             setXp={setXp}
             Countdown={Countdown}
-          />
-          {projects.map((e) => <Project name={e.projectName} Progress={Progress} projectPeriod={(new Date(e.projectDeadline).getTime()) - (new Date().getTime())} xp={xp} xpValue={10000} setXp={setXp} Countdown={Countdown} />)}
+          /> */}
+          {projects.map((e, i) => (
+            <>
+              <Project
+                name={e.projectName}
+                Progress={Progress}
+                projectDeadline={e.projectDeadline}
+                projectPeriod={e.projectPeriod}
+                xp={xp}
+                xpValue={10000}
+                setXp={setXp}
+                Countdown={Countdown}
+              />
+              <Button
+                onClick={() => {
+                  const arrayCopy = [...projects];
+                  arrayCopy.splice(i, 1);
+                  setProjects(arrayCopy);
+                }}
+              >
+                ^ Delete this Task
+              </Button>
+            </>
+          ))}
         </ul>
         <h3>Daily</h3>
         <p>Daily items</p>

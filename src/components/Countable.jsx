@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
 
 function Countable({name, goal, xp, setXp, xpValue}) {
   // initialize state
@@ -8,8 +9,9 @@ function Countable({name, goal, xp, setXp, xpValue}) {
   // const [max, setMax] = useState(maximum);
   return (
     <li style={{color: isComplete ? 'green' : 'red'}}>
-      {`${name} (${goal}x)`}: <button>-</button>
-      <button
+      {`${name} (${goal}x)`}:
+      <Button
+        variant="outlined"
         onClick={() => {
           if (count < goal) {
             if (count + 1 === goal) {
@@ -22,7 +24,7 @@ function Countable({name, goal, xp, setXp, xpValue}) {
         }}
       >
         +
-      </button>{" "}
+      </Button>{" "}
       {count}/{goal}
     </li>
   );
