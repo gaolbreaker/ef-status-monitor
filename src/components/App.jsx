@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
-import LinearProgress from '@mui/material/Card';
 
 // Components
 import Countable from './Countable';
