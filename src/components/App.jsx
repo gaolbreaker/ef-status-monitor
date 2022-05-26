@@ -10,7 +10,7 @@ import StyledAddCountable from './AddCountable';
 import Countdown from './Countdown';
 
 const Progress = styled.progress`
-  width: 249px;
+  width: 250px;
   height: 20px;
 `;
 
