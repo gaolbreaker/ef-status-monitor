@@ -43,17 +43,17 @@ const Main = styled.div`
 function App() {
   const [xp, setXp] = useState(parseInt(Math.random() * 1000 + 1000 ));
   const [level, setLevel] = useState(parseInt((Math.random() * 20 + 10)));
-  const [xpToLevel, setXpToLevel] = useState(100);
-  const [status, setStatus] = useState('');
-  const [statProg, setStatProg] = useState(0);
+  // const [xpToLevel, setXpToLevel] = useState(100);
+  // const [status, setStatus] = useState('');
+  // const [statProg, setStatProg] = useState(0);
   const [statusMinute, setStatusMinute] = useState('');
   const [statProgMin, setStatProgMin] = useState(0);
   const [statusHour, setStatusHour] = useState('');
   const [statProgHr, setStatProgHr] = useState(0);
   const [statusDay, setStatusDay] = useState('');
   const [statProgDay, setStatProgDay] = useState(0);
-  const [count, setCount] = useState(0);
-  const [max, setMax] = useState(7);
+  // const [count, setCount] = useState(0);
+  // const [max, setMax] = useState(7);
   const [addProjectIsVisible, setAddProjectIsVisible] = useState(false);
   const [projects, setProjects] = useState(localStorage.getItem('projects') !== null ? JSON.parse(localStorage.getItem('projects')) : []);
   const [addCountableIsVisible, setAddCountableIsVisible] = useState(false);
